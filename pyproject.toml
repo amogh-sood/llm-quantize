@@ -1,0 +1,18 @@
+[project]
+name = "llm-quantize"
+version = "0.1.0"
+description = "A CLI tool for quantizing and evaluating LLMs"
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+  "transformers",
+  "bitsandbytes",
+  "datasets",
+  "evaluate",
+  "huggingface-hub",
+  "pyyaml>=6.0.1",
+  "dotenv",
+  "accelerate"
+]
+
