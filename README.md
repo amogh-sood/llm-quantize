@@ -1,5 +1,5 @@
 ````markdown
-# LLM Quantization Comparator
+### LLM Quantization Comparator
 
 A terminal-based CLI tool for evaluating and comparing large language models from Hugging Face across different quantization formats:
 
@@ -11,7 +11,7 @@ The tool measures model size, perplexity, and perplexity efficiency per memory u
 
 ---
 
-## Quickstart
+### Quickstart
 
 ### 1. Install `uv`
 
