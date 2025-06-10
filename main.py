@@ -110,7 +110,7 @@ table.add_row("4-bit Quantized", f"{fourbit_size:.2f}")
 console.print(table)
 
 # Perplexity evaluation
-sample_text = "The quick brown fox jumps over the lazy dog."
+sample_text = "What are the benefits of using quantized models in NLP tasks?"
 
 with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.description}")) as progress:
     task = progress.add_task(description="Calculating base model perplexity...", total=None)
