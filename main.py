@@ -55,7 +55,7 @@ with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.descripti
     task = progress.add_task(description="Loading base model...", total=None)
     start = time.time()
     tokenizer = AutoTokenizer.from_pretrained(modelID, cache_dir=base_model_path)
-    baseModel = AutoModelForCausalLM.from_pretrained(modelID, cache_dir=base_model_path).to("cuda")
+    baseModel = AutoModelForCausalLM.from_pretrained(modelID, cache_dir=base_model_path, trust_remote_code = True, device_map="auto").to("cuda")
     baseModel.save_pretrained(base_model_path)
     tokenizer.save_pretrained(base_model_path)
     elapsed = time.time() - start
@@ -71,6 +71,7 @@ with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.descripti
         modelID,
         cache_dir=int8_model_path,
         quantization_config=bnb_config_int8,
+        device_map="auto",
     )
     model_int8.save_pretrained(int8_model_path)
     elapsed = time.time() - start
@@ -91,6 +92,7 @@ with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.descripti
         modelID,
         cache_dir=fourbit_model_path,
         quantization_config=bnb_config_4bit,
+        device_map="auto",
     )
     model_4bit.save_pretrained(fourbit_model_path)
     elapsed = time.time() - start
