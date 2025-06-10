@@ -122,7 +122,11 @@ table.add_row("4-bit Quantized", f"{fourbit_size:.2f}")
 console.print(table)
 
 # Perplexity evaluation
-sample_text = "What are the benefits of using quantized models in NLP tasks?"
+sample_text = '''Quantum computing represents a paradigm shift in computational science, leveraging principles of superposition and entanglement to solve problems intractable for classical computers. 
+            While still in nascent stages of development, its potential applications span cryptography, drug discovery, and materials science. 
+            However, engineering fault-tolerant quantum systems remains a formidable challenge, requiring advancements in qubit stability and error correction protocols. 
+            The integration of quantum algorithms with classical pre- and post-processing techniques also presents complex architectural considerations for hybrid computing environments.'''
+
 
 with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.description}")) as progress:
     task = progress.add_task(description="Calculating base model perplexity...", total=None)
