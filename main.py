@@ -8,6 +8,7 @@ from rich.table import Table
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 import time
+import pandas as pd
 
 
 console = Console()
@@ -96,10 +97,21 @@ with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.descripti
     progress.stop()
 console.print(f"[green]4-bit model loaded in {elapsed:.2f} seconds[/]")
 
+# Function to get directory size
+import os
+
+def get_dir_size(path):
+    total = 0
+    for dirpath, dirnames, filenames in os.walk(path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            total += os.path.getsize(fp)
+    return total
+
 # Show model sizes
-base_size = bytes_to_gb(baseModel.get_memory_footprint())
-int8_size = bytes_to_gb(model_int8.get_memory_footprint())
-fourbit_size = bytes_to_gb(model_4bit.get_memory_footprint())
+base_size = bytes_to_gb(get_dir_size(base_model_path))
+int8_size = bytes_to_gb(get_dir_size(int8_model_path))
+fourbit_size = bytes_to_gb(get_dir_size(fourbit_model_path))
 
 table = Table(title="Model Size Comparison")
 table.add_column("Model Type", style="bold cyan")
@@ -163,3 +175,16 @@ console.print(eff_table)
 # Determine the most efficient model
 best_ratio = min((base_ratio, "Base"), (int8_ratio, "8-bit"), (fourbit_ratio, "4-bit"))
 console.print(f"\n[bold green]Most efficient model:[/] [cyan]{best_ratio[1]}[/] (lowest perplexity per GB)")
+
+data = {
+    "Model Type": ["Base (fp16)", "8-bit", "4-bit"],
+    "Size (GB)": [base_size, int8_size, fourbit_size],
+    "Perplexity": [base_perp.item(), int8_perp.item(), fourbit_perp.item()],
+    "Perplexity/GB": [base_ratio, int8_ratio, fourbit_ratio],
+}
+df = pd.DataFrame(data)
+df.attrs["title"] = modelID
+df = pd.DataFrame(data)
+csv_path = os.path.join(script_dir, "model_comparison.csv")
+df.to_csv(csv_path, index=False)
+console.print(f"[green]Data saved to {csv_path}[/]")

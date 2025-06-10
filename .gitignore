@@ -10,3 +10,4 @@ wheels/
 .venv
 .env
 models/
+model_comparison.csv
