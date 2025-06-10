@@ -85,11 +85,14 @@ Required packages include:
 Tested Models
 
 These model IDs are known to work with this tool:
+(2x Nvidia H100)
 
 * google/gemma-2b-it
 * Qwen/Qwen1.5-0.5B
 * mistralai/Mistral-7B-Instruct-v0.1
 * tiiuae/falcon-7b-instruct
+* google/gemma-3-12b-it-qat-q4_0-unquantized
+* microsoft/phi-4 
 
 ---
 
